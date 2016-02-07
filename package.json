@@ -1,0 +1,18 @@
+{
+  "name": "PcaWebSliders",
+  "version": "1.0.0",
+  "description": "Copyright 2014 John Treacy",
+  "main": "server.js",
+  "dependencies": {
+    "mime": "^1.2.11",
+    "onoff": "^0.3.0",
+    "socket.io": "^0.9.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
