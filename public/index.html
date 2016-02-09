@@ -42,21 +42,27 @@
     }
     </style>
     <script>
-   /* $(function() {
+    $(function() {
         $("#draggable").draggable({
            stop: function( event, ui ) {
             var y = $('#draggable').position().top,
                 x = $('#draggable').position().left;
             console.log('x= '+x*10);
             console.log('y= '+y*10);
-            socket.emit('pwmpulse',10,y*10);
+            
+            socketEmit('pwmpulse',11,y*20);
+            setTimeout(socketEmit('pwmpulse',10,x*20), 500);
+            //setTimeout(socket.emit('pwmstop'),2500);
+            //socket.emit('pwmpulse',10,y*10);
             //socket.emit('pwmpulse',11,x*10);
            }
         });
-    });*/
+    });
 
 
-
+function socketEmit(order,channel,position){
+    socket.emit(order,channel,position);
+}
 
 
 
@@ -80,6 +86,7 @@
     <div id="draggableArea" class="ui-widget-content">
         <span id="draggable">P</span>
     </div>
+    <button onclick="javascript:socketEmit('pwmstop')">Stop</button>
 </body>
 
 </html>
