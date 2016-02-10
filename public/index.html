@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="./stylesheets/pcafaders.css">
     <style>
     #draggableArea {
-        width: 165px;
-        height: 165px;
+        width: 400px;
+        height: 400px;
         padding: 0.5em;
         background-color: #333;
         position: relative;
@@ -37,8 +37,8 @@
         background-color: pink;
         border: 1px solid #666;
         position: absolute;
-        top: 82px;
-        left: 82px;
+        top: 200px;
+        left: 200px;
     }
     </style>
     <script>
@@ -50,9 +50,9 @@
             console.log('x= '+x*10);
             console.log('y= '+y*10);
             
-            socketEmit('pwmpulse',11,y*20);
-            setTimeout(socketEmit('pwmpulse',10,x*20), 500);
-            //setTimeout(socket.emit('pwmstop'),2500);
+            socketEmit('pwmpulse',11,y*10);
+            setTimeout(function(){socketEmit('pwmpulse',10,x*10)}, 100);
+            setTimeout(function(){socket.emit('pwmstop')},2500);
             //socket.emit('pwmpulse',10,y*10);
             //socket.emit('pwmpulse',11,x*10);
            }
