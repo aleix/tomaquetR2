@@ -86,7 +86,10 @@ function socketEmit(order,channel,position){
     <div id="draggableArea" class="ui-widget-content">
         <span id="draggable">P</span>
     </div>
-    <button onclick="javascript:socketEmit('pwmstop')">Stop</button>
+    <button onclick="javascript:socket.emit('pwmstop')">Stop</button>
+    <button onclick="javascript:socket.emit('startMotor')">UP</button>
+    <button onclick="javascript:socket.emit('startMotor(17,18,0,1)')">DOWN</button>
+    <button onclick="javascript:socket.emit('startMotor(17,18,0,0)')">cancelar</button>
 </body>
 
 </html>

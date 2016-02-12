@@ -6,7 +6,15 @@ var http = require('http');
 var fs  = require('fs');
 var path = require('path');
 var mime = require('mime');
+var wpi = require('wiring-pi');
+
+
+
 var cache = {};
+
+function prova(){
+	console.log('hem cosit els jsss');
+}
 
 function send404(response) {
   response.writeHead(404, {'Content-Type': 'text/plain'});
