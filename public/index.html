@@ -24,11 +24,13 @@
     <link rel="stylesheet" href="./stylesheets/pcafaders.css">
     <style>
     #draggableArea {
-        width: 400px;
-        height: 400px;
+        width: 200px;
+        height: 200px;
         padding: 0.5em;
         background-color: #333;
-        position: relative;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
     
     #draggableArea span {
@@ -40,33 +42,61 @@
         top: 200px;
         left: 200px;
     }
+    body{
+        position: relative;
+    }
+    #stream{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
     </style>
     <script>
     $(function() {
         $("#draggable").draggable({
-           stop: function( event, ui ) {
-            var y = $('#draggable').position().top,
-                x = $('#draggable').position().left;
-            console.log('x= '+x*10);
-            console.log('y= '+y*10);
-            
-            socketEmit('pwmpulse',11,y*10);
-            setTimeout(function(){socketEmit('pwmpulse',10,x*10)}, 100);
-            setTimeout(function(){socket.emit('pwmstop')},2500);
-            //socket.emit('pwmpulse',10,y*10);
-            //socket.emit('pwmpulse',11,x*10);
-           }
+            stop: function(event, ui) {
+                var y = $('#draggable').position().top,
+                    x = $('#draggable').position().left;
+                console.log('x= ' + x * 10);
+                console.log('y= ' + y * 10);
+
+                socketEmit('pwmpulse', 11, y * 10);
+                setTimeout(function() {
+                    socketEmit('pwmpulse', 10, x * 10)
+                }, 100);
+                setTimeout(function() {
+                    socket.emit('pwmstop')
+                }, 2500);
+                //socket.emit('pwmpulse',10,y*10);
+                //socket.emit('pwmpulse',11,x*10);
+            }
         });
     });
 
 
-function socketEmit(order,channel,position){
-    socket.emit(order,channel,position);
-}
+    function socketEmit(order, channel, position) {
+        socket.emit(order, channel, position);
+    }
 
 
+    //var socket = io();
+    var socket = io.connect();
+    socket.on('liveStream', function(url) {
+        $('#stream').attr('src', url);
+        $('.start').hide();
+    });
 
+    function startStream() {
+        socket.emit('start-stream');
+        //$('.start').hide();
+        console.log('startStream');
+    }
 
+    function stopStream() {
+        socket.emit('stop-stream');
+        //$('.start').hide();
+        console.log('stopStream');
+    }
     </script>
 </head>
 
@@ -86,10 +116,13 @@ function socketEmit(order,channel,position){
     <div id="draggableArea" class="ui-widget-content">
         <span id="draggable">P</span>
     </div>
-    <button onclick="javascript:socket.emit('pwmstop')">Stop</button>
-    <button onclick="javascript:socket.emit('upMotor')">UP</button>
-    <button onclick="javascript:socket.emit('downMotor')">DOWN</button>
-    <button onclick="javascript:socket.emit('cancelPin')">Atura motor CD</button>
+    <button onclick="javascript:socket.emit('pwmstop')">Stop</button><br/>
+    <button onclick="javascript:socket.emit('upMotor')">UP</button><br/>
+    <button onclick="javascript:socket.emit('downMotor')">DOWN</button><br/>
+    <button onclick="javascript:socket.emit('cancelPin')">Atura motor CD</button><br/>
+    <button type="button" onclick="startStream()">Start Camera</button><br/>
+    <button type="button" onclick="stopStream()">Stop Camera</button><br/>
+    <img src="" id="stream">
 </body>
 
 </html>

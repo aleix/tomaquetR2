@@ -9,10 +9,6 @@ var mime = require('mime');
 var cache = {};
 
 
-
-
-
-
 function send404(response) {
   response.writeHead(404, {'Content-Type': 'text/plain'});
   response.write('Error 404: resource not found.');
@@ -53,6 +49,11 @@ var server = http.createServer(function(request, response) {
 
   if (request.url == '/') {
     filePath = 'public/index.html';
+  }else if (request.url.indexOf('/stream') == 0) {
+    filePath = 'stream/image_stream.jpg';
+    var absPath = './' + filePath;
+    serveStatic(response, {}, absPath);
+    return;
   } else {
     filePath = 'public' + request.url;
   }
